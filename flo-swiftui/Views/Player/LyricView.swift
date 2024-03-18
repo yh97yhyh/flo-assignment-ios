@@ -45,19 +45,25 @@ struct LyricView: View {
                 }
                 .padding(.horizontal)
                 
-                ScrollView(showsIndicators: false) {
-                    VStack(alignment: .leading, spacing: 10) {
-                        ForEach(viewModel.lyrics.indices, id: \.self) { index in
-                            Text(viewModel.lyrics[index].text)
-                                .foregroundColor(index == viewModel.currentLyricIndex ? .white : .gray)
-                                .onTapGesture {
-                                    let selectedLyricTime = viewModel.lyrics[index].time
-                                    viewModel.seek(to: selectedLyricTime)
-                                }
+                ScrollViewReader {scrollProxy in
+                    ScrollView(showsIndicators: false) {
+                        VStack(alignment: .leading, spacing: 10) {
+                            ForEach(viewModel.lyrics.indices, id: \.self) { index in
+                                Text(viewModel.lyrics[index].text)
+                                    .foregroundColor(index == viewModel.currentLyricIndex ? .white : .gray)
+                                    .onTapGesture {
+                                        let selectedLyricTime = viewModel.lyrics[index].time
+                                        viewModel.seek(to: selectedLyricTime)
+                                    }
+                                    .id(index)
+                            }
                         }
                     }
+                    .padding(.horizontal)
+                    .onChange(of: viewModel.currentLyricIndex) { newIndex in
+                        scrollProxy.scrollTo(newIndex, anchor: .center)
+                    }
                 }
-                .padding(.horizontal)
                 
                 PlayerProgressView()
                     .padding(.horizontal)
