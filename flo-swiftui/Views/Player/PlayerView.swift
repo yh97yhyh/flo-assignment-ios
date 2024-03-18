@@ -46,9 +46,9 @@ struct PlayerView: View {
                         .cornerRadius(20)
                         .padding(.bottom)
                     
-                    Text(viewModel.lyrics[0].text)
+                    Text(viewModel.currentLyricText)
                         .foregroundColor(.white)
-                    Text(viewModel.lyrics[1].text)
+                    Text(viewModel.nextLyricText)
                         .foregroundStyle(.gray)
                         .padding(.bottom, 40)
                     
@@ -116,12 +116,12 @@ struct PlayerView: View {
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
         .ignoresSafeArea()
-//        .onReceive(viewModel.$currentTime) { newCurrentTime in
-//            print("currentTime : \(newCurrentTime)")
-//        }
-//        .onReceive(viewModel.$isPlaying) { newIsPlaying in
-//            print("isPlaying : \(newIsPlaying)")
-//        }
+        .onReceive(viewModel.$currentTime) { newCurrentTime in
+            print("currentTime : \(newCurrentTime)")
+        }
+        .onReceive(viewModel.$isPlaying) { newIsPlaying in
+            print("isPlaying : \(newIsPlaying)")
+        }
     }
 }
 
