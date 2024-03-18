@@ -8,14 +8,27 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var showMainView = false
+    @StateObject var playerViewModel = PlayerViewModel.shared
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            if showMainView {
+                NavigationStack {
+                    PlayerView()
+//                        .environmentObject(playerViewModel)
+                }
+            } else {
+                SplashView()
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            withAnimation {
+                                showMainView = true
+                            }
+                        }
+                    }
+            }
         }
-        .padding()
     }
 }
 
