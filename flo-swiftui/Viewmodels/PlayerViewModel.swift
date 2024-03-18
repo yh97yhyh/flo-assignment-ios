@@ -25,6 +25,7 @@ class PlayerViewModel: NSObject, ObservableObject, AVAudioPlayerDelegate {
     @Published var currentTime: TimeInterval = 0
     private var timer: Timer?
     
+    @Published var currentLyricIndex = 0
     @Published var currentLyricText = ""
     @Published var nextLyricText = ""
     
@@ -158,6 +159,7 @@ class PlayerViewModel: NSObject, ObservableObject, AVAudioPlayerDelegate {
         if let currentLyricIndex = lyrics.firstIndex(where: { $0.time > audioPlayer.currentTime }) {
             if currentLyricIndex > 0 {
                 currentLyricText = lyrics[currentLyricIndex - 1].text
+                self.currentLyricIndex = currentLyricIndex - 1
             }
             if currentLyricIndex < lyrics.count {
                 nextLyricText = lyrics[currentLyricIndex].text

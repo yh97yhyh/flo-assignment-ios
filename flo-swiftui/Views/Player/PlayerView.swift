@@ -46,69 +46,18 @@ struct PlayerView: View {
                         .cornerRadius(20)
                         .padding(.bottom)
                     
-                    Text(viewModel.currentLyricText)
-                        .foregroundColor(.white)
-                    Text(viewModel.nextLyricText)
-                        .foregroundStyle(.gray)
-                        .padding(.bottom, 40)
-                    
-                    Slider(value: Binding(
-                        get: { viewModel.currentTime },
-                        set: { newValue in
-                            viewModel.seek(to: newValue)
-                            viewModel.currentTime = newValue
-                        }),
-                           in: 0...Double(viewModel.duration),
-                           step: 1)
-                        .accentColor(.green)
-                    
-                    HStack {
-                        Text(viewModel.currentTimeText)
-                            .font(.footnote)
-                            .foregroundColor(.white)
-                        
-                        Spacer()
-                        
-                        Text(viewModel.endTimeText)
-                            .font(.footnote)
-                            .foregroundColor(.white)
-                    }
-                    .padding(.bottom, 16)
-                    
-                    
-                    HStack {
-                        Button {
-                            
-                        } label: {
-                            Image(systemName: "backward.end.fill")
-                                .resizable()
-                                .frame(width: 20, height: 20)
+                    NavigationLink(destination: LyricView()) {
+                        VStack {
+                            Text(viewModel.currentLyricText)
                                 .foregroundColor(.white)
-                        }
-                        
-                        Button {
-                            if viewModel.isPlaying {
-                                viewModel.pause()
-                            } else {
-                                viewModel.play()
-                            }
-                        } label: {
-                            Image(systemName: viewModel.isPlaying ? "pause.fill" : "play.fill")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(.white)
-                        }
-                        .padding(.horizontal, 48)
-                        
-                        Button {
-                            
-                        } label: {
-                            Image(systemName: "forward.end.fill")
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(.white)
+                            Text(viewModel.nextLyricText)
+                                .foregroundStyle(.gray)
+                                .padding(.bottom, 40)
                         }
                     }
+                    
+                    PlayerProgressView()
+                    
                 }
             }
             .padding(.horizontal)
@@ -116,12 +65,12 @@ struct PlayerView: View {
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
         .ignoresSafeArea()
-        .onReceive(viewModel.$currentTime) { newCurrentTime in
-            print("currentTime : \(newCurrentTime)")
-        }
-        .onReceive(viewModel.$isPlaying) { newIsPlaying in
-            print("isPlaying : \(newIsPlaying)")
-        }
+//        .onReceive(viewModel.$currentTime) { newCurrentTime in
+//            print("currentTime : \(newCurrentTime)")
+//        }
+//        .onReceive(viewModel.$isPlaying) { newIsPlaying in
+//            print("isPlaying : \(newIsPlaying)")
+//        }
     }
 }
 
