@@ -63,6 +63,9 @@ struct LyricView: View {
                     .onChange(of: viewModel.currentLyricIndex) { newIndex in
                         scrollProxy.scrollTo(newIndex, anchor: .center)
                     }
+                    .onAppear {
+                        scrollProxy.scrollTo(viewModel.currentLyricIndex, anchor: .center)
+                    }
                 }
                 
                 PlayerProgressView()

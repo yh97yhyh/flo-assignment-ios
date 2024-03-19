@@ -156,14 +156,20 @@ class PlayerViewModel: NSObject, ObservableObject, AVAudioPlayerDelegate {
     private func updateHighlightLyrics() {
         guard let audioPlayer = audioPlayer else { return }
         
-        if let currentLyricIndex = lyrics.firstIndex(where: { $0.time > audioPlayer.currentTime }) {
-            if currentLyricIndex > 0 {
-                currentLyricText = lyrics[currentLyricIndex - 1].text
-                self.currentLyricIndex = currentLyricIndex - 1
+        if let currentIndex = lyrics.firstIndex(where: { $0.time > audioPlayer.currentTime }) {
+            if currentIndex > 0 {
+                currentLyricText = lyrics[currentIndex - 1].text
+                currentLyricIndex = currentIndex - 1
             }
-            if currentLyricIndex < lyrics.count {
-                nextLyricText = lyrics[currentLyricIndex].text
+            
+            if currentIndex < lyrics.count {
+                nextLyricText = lyrics[currentIndex].text
             }
+            
+        } else {
+            currentLyricIndex = lyrics.count - 1
+            currentLyricText = lyrics[lyrics.count - 1].text
+            nextLyricText = ""
         }
     }
     
